@@ -6,16 +6,122 @@
     <title>Admin Panel - TheGalaxyHub</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; }
-        .panel { background: white; padding: 20px; border-radius: 10px; max-width: 600px; margin: 0 auto; }
-        h1 { color: #7289da; }
+        .panel { background: white; padding: 20px; border-radius: 10px; max-width: 1200px; margin: 0 auto; }
+        h1 { color: #7289da; text-align: center; }
+        .tabs { display: flex; border-bottom: 1px solid #ccc; }
+        .tab { padding: 10px; cursor: pointer; background: #eee; }
+        .tab.active { background: white; border-bottom: 2px solid #7289da; }
+        .tab-content { display: none; padding: 20px; }
+        .tab-content.active { display: block; }
+        input, textarea, button { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        button { background: #7289da; color: white; border: none; cursor: pointer; }
+        button:hover { background: #5b6eae; }
+        ul { list-style: none; padding: 0; }
+        li { padding: 10px; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
     <div class="panel">
-        <h1>Admin Panel</h1>
-        <p>Benvenuto nel pannello di amministrazione di TheGalaxyHub.</p>
-        <p>Qui puoi gestire utenti, moderare, ecc.</p>
-        <a href="/">Torna alla Home</a>
+        <h1>Admin Panel - TheGalaxyHub</h1>
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('unban')">Richieste Unban</div>
+            <div class="tab" onclick="showTab('candidature')">Richieste Candidature</div>
+            <div class="tab" onclick="showTab('announcements')">Annunci</div>
+            <div class="tab" onclick="showTab('communications')">Comunicazioni</div>
+            <div class="tab" onclick="showTab('staff')">Staff Team</div>
+        </div>
+        <div id="unban" class="tab-content active">
+            <h2>Richieste Unban</h2>
+            <ul id="unban-list">
+                <li>Richiesta 1: Utente XYZ - Motivo: Spam</li>
+                <li>Richiesta 2: Utente ABC - Motivo: Violazione regole</li>
+            </ul>
+        </div>
+        <div id="candidature" class="tab-content">
+            <h2>Richieste Candidature</h2>
+            <ul id="candidature-list">
+                <li>Candidatura 1: Nome - Esperienza: Moderatore</li>
+            </ul>
+        </div>
+        <div id="announcements" class="tab-content">
+            <h2>Annunci</h2>
+            <textarea id="announcement-text" placeholder="Scrivi un annuncio"></textarea>
+            <button onclick="addAnnouncement()">Aggiungi Annuncio</button>
+            <ul id="announcements-list"></ul>
+        </div>
+        <div id="communications" class="tab-content">
+            <h2>Comunicazioni</h2>
+            <textarea id="communication-text" placeholder="Scrivi una comunicazione"></textarea>
+            <button onclick="addCommunication()">Aggiungi Comunicazione</button>
+            <ul id="communications-list"></ul>
+        </div>
+        <div id="staff" class="tab-content">
+            <h2>Staff Team</h2>
+            <input type="text" id="new-staff" placeholder="Nome nuovo membro">
+            <button onclick="addStaff()">Aggiungi Membro</button>
+            <ul id="staff-list"></ul>
+        </div>
     </div>
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function loadData() {
+            const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+            document.getElementById('announcements-list').innerHTML = announcements.map(a => `<li>${a}</li>`).join('');
+
+            const communications = JSON.parse(localStorage.getItem('communications')) || [];
+            document.getElementById('communications-list').innerHTML = communications.map(c => `<li>${c}</li>`).join('');
+
+            const staff = JSON.parse(localStorage.getItem('staff')) || ['Daniel'];
+            document.getElementById('staff-list').innerHTML = staff.map(s => `<li>${s} <button onclick="removeStaff('${s}')">Rimuovi</button></li>`).join('');
+        }
+
+        function addAnnouncement() {
+            const text = document.getElementById('announcement-text').value;
+            if (text) {
+                const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+                announcements.push(text);
+                localStorage.setItem('announcements', JSON.stringify(announcements));
+                loadData();
+                document.getElementById('announcement-text').value = '';
+            }
+        }
+
+        function addCommunication() {
+            const text = document.getElementById('communication-text').value;
+            if (text) {
+                const communications = JSON.parse(localStorage.getItem('communications')) || [];
+                communications.push(text);
+                localStorage.setItem('communications', JSON.stringify(communications));
+                loadData();
+                document.getElementById('communication-text').value = '';
+            }
+        }
+
+        function addStaff() {
+            const name = document.getElementById('new-staff').value;
+            if (name) {
+                const staff = JSON.parse(localStorage.getItem('staff')) || [];
+                staff.push(name);
+                localStorage.setItem('staff', JSON.stringify(staff));
+                loadData();
+                document.getElementById('new-staff').value = '';
+            }
+        }
+
+        function removeStaff(name) {
+            const staff = JSON.parse(localStorage.getItem('staff')) || [];
+            const updated = staff.filter(s => s !== name);
+            localStorage.setItem('staff', JSON.stringify(updated));
+            loadData();
+        }
+
+        loadData();
+    </script>
 </body>
 </html>

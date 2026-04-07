@@ -18,33 +18,58 @@
     <link rel="stylesheet" crossorigin="" href="css/index-ZKjTXfx4.css">
     <style>
         body { font-family: 'Roboto', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; min-height: 100vh; }
-        header { text-align: center; padding: 50px 20px; background: rgba(0,0,0,0.3); }
-        header h1 { font-size: 3em; margin-bottom: 10px; }
-        header p { font-size: 1.2em; margin-bottom: 20px; }
-        .btn { background: #7289da; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
-        section { padding: 50px 20px; max-width: 1200px; margin: 0 auto; }
-        .section-title { font-size: 2.5em; margin-bottom: 20px; text-align: center; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .card { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; text-align: center; }
-        .card h3 { margin-bottom: 10px; }
-        footer { text-align: center; padding: 20px; background: rgba(0,0,0,0.5); }
+        header { text-align: center; padding: 100px 20px; background: rgba(0,0,0,0.3); }
+        header h1 { font-size: 4em; margin-bottom: 10px; font-weight: bold; }
+        header p { font-size: 1.5em; margin-bottom: 30px; }
+        .btn { background: #7289da; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-size: 1.2em; }
+        section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-title { font-size: 3em; margin-bottom: 40px; text-align: center; font-weight: bold; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: transform 0.3s; }
+        .card:hover { transform: translateY(-10px); }
+        .card h3 { margin-bottom: 15px; font-size: 1.5em; }
+        footer { text-align: center; padding: 40px; background: rgba(0,0,0,0.5); }
+        .hero { background: rgba(0,0,0,0.5); border-radius: 20px; padding: 60px; margin-bottom: 60px; }
     </style>
   </head>
 
   <body>
     <header>
         <h1>TheGalaxyHub</h1>
-        <p>La tua community Discord per gamers e appassionati</p>
+        <p>La community Discord definitiva per gamers e appassionati</p>
         <a href="https://discord.gg/yourinvite" class="btn">Unisciti Ora</a>
     </header>
 
+    <section class="hero">
+        <h2>Benvenuti in TheGalaxyHub</h2>
+        <p>Unisciti alla nostra community vibrante dove puoi giocare, chattare e condividere le tue passioni.</p>
+    </section>
+
+    <section id="features">
+        <h2 class="section-title">Perché Scegliere TheGalaxyHub?</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Community Amichevole</h3>
+                <p>Un ambiente sicuro e inclusivo per tutti.</p>
+            </div>
+            <div class="card">
+                <h3>Eventi Regolari</h3>
+                <p>Tornei, chat rooms e attività settimanali.</p>
+            </div>
+            <div class="card">
+                <h3>Staff Dedito</h3>
+                <p>Moderazione professionale e supporto 24/7.</p>
+            </div>
+        </div>
+    </section>
+
     <section id="about">
-        <h2>Chi Siamo</h2>
+        <h2 class="section-title">Chi Siamo</h2>
         <p>TheGalaxyHub è una community Discord dedicata a gamers italiani e internazionali. Offriamo un ambiente sicuro e divertente per chiacchierare, giocare e condividere passioni.</p>
     </section>
 
     <section id="rules">
-        <h2>Regole</h2>
+        <h2 class="section-title">Regole</h2>
         <div class="grid">
             <div class="card">
                 <h3>Rispetto</h3>
@@ -61,17 +86,24 @@
         </div>
     </section>
 
-    <section id="events">
-        <h2>Eventi</h2>
-        <p>Partecipa ai nostri eventi settimanali: tornei, chat rooms, e molto altro.</p>
-    </section>
-
-    <section id="admin">
-        <h2>Admin Panel</h2>
-        <p>Accesso riservato agli amministratori. <a href="login.html">Accedi</a></p>
+    <section id="team">
+        <h2 class="section-title">Il Nostro Team</h2>
+        <div class="grid" id="staff-list">
+            <!-- Staff will be loaded here -->
+        </div>
     </section>
 
     <footer>
         <p>&copy; 2024 TheGalaxyHub. Tutti i diritti riservati.</p>
     </footer>
+
+    <script>
+        // Load staff from localStorage
+        function loadStaff() {
+            const staff = JSON.parse(localStorage.getItem('staff')) || ['Daniel', 'Support Team'];
+            const staffList = document.getElementById('staff-list');
+            staffList.innerHTML = staff.map(member => `<div class="card"><h3>${member}</h3></div>`).join('');
+        }
+        loadStaff();
+    </script>
   </body>

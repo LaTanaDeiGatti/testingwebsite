@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunicazioni - TheGalaxyHub</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; }
+        h1 { text-align: center; }
+        ul { list-style: none; padding: 0; }
+        li { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.3); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Comunicazioni</h1>
+        <ul id="communications-list"></ul>
+        <a href="/">Torna alla Home</a>
+    </div>
+    <script>
+        const communications = JSON.parse(localStorage.getItem('communications')) || [];
+        document.getElementById('communications-list').innerHTML = communications.map(c => `<li>${c}</li>`).join('');
+    </script>
+</body>
+</html>
